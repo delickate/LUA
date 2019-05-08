@@ -1,0 +1,45 @@
+-----------------------------------------------------------------------------------------
+--
+-- main.lua
+--
+-----------------------------------------------------------------------------------------
+
+-- Your code here
+-- SANI: local is used to declare variable
+local tapCount = 0
+
+-- SANI: Loads and displays an image on the screen.
+local background = display.newImageRect( "background.png", 360, 570 )
+background.x = display.contentCenterX -- SANI:  Horizontal center
+background.y = display.contentCenterY -- SANI: Verticle center
+-- Display text on screen
+local tapText = display.newText( tapCount, display.contentCenterX, 20, native.systemFont, 40 )
+tapText:setFillColor( 0, 0, 0 )
+
+local balloon = display.newImageRect( "balloon.png", 112, 112 )
+balloon.x = display.contentCenterX
+balloon.y = display.contentCenterY
+balloon.alpha = 0.8 -- SANI: Set transparency
+
+
+local platform = display.newImageRect( "platform.png", 300, 50 )
+platform.x = display.contentCenterX
+platform.y = display.contentHeight-25
+
+local physics = require( "physics" ) -- SANI: Load module
+physics.start() -- SANI: Starts the physics engine.
+-- SANI: Adds a physical body to an object. 
+physics.addBody( platform, "static" ) -- SANI: static means fixed on position
+physics.addBody( balloon, "dynamic", { radius=50, bounce=0.3 } ) -- SANI: dynamic means moveable
+
+
+local function pushBalloon()
+    -- SANI: Applies a simulated impulse force to a physical object.
+    -- SANI: 0 for x-axis, 0.5 for y axis. +0 = right, -0 = left, +0.5 = down, -0.5 = up
+    balloon:applyLinearImpulse( 0, -0.5, balloon.x, balloon.y )
+
+    tapCount = tapCount + 1
+    tapText.text = tapCount
+end
+
+balloon:addEventListener( "tap", pushBalloon )
