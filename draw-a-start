@@ -1,0 +1,8 @@
+local physics = require("physics")
+physics.start()
+
+-- SANI: DRAW A START
+local line = display.newLine( 200, 90, 227, 165 )
+line:append( 305,165, 243,216, 265,290, 200,245, 135,290, 157,215, 95,165, 173,165, 200,90 )
+line:setStrokeColor( 1, 0, 0, 1 )
+line.strokeWidth = 1
