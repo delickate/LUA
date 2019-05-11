@@ -1,0 +1,11 @@
+local physics = require("physics")
+physics.start()
+
+-- SANI: Draw a rectangle
+
+ local plate = display.newRect(0,0,0,0)
+ plate.width = display.contentWidth-200
+ plate.height = 10
+ plate.x = display.contentCenterX -- SANI: Center along x-axis
+ plate.y = display.contentHeight-50 -- SANI: Total screen height - 25
+ plate:setFillColor( 25 )
