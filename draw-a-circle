@@ -1,0 +1,9 @@
+local physics = require("physics")
+physics.start()
+
+-- SANI: Draw a circle
+local circle = display.newCircle( display.contentCenterX, 100, 50 )
+-- SANI: Herer newCircle( x-axis, y-axis, rdius )
+circle:setFillColor( 0.5 )
+circle.strokeWidth = 5
+circle:setStrokeColor( 1, 0, 0 )
