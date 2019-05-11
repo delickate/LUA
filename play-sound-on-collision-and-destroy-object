@@ -1,0 +1,58 @@
+local physics = require("physics")
+physics.start()
+-- physics.setGravity( 0, 0 ) -- SANI: object with not fell down if remove this line.
+
+local score = 0 -- SANI: Variable to count collision
+local scoreText = display.newText( "Collisions: " .. score, 150, 125, native.systemBoldFont, 32 ) -- SANI: Label
+-- SANI: Sound file
+local backgroundMusic = audio.loadStream( "Alarm09.wav" )
+
+-- SANI: Draw a Ractangle 
+ local plate = display.newRect(0,0,0,0)
+ plate.width = display.contentWidth-200
+ plate.height = 10
+ plate.x = display.contentCenterX -- SANI: Center along x-axis
+ plate.y = display.contentHeight-50 -- SANI: Total screen height - 25
+ plate:setFillColor( 25 )
+ plate.myName = "plate"
+ physics.addBody( plate, "static" ) -- SANI: Make a position fixed
+
+
+-- SANI: Draw a Circle
+local circle = display.newCircle( display.contentCenterX, 100, 50 )
+circle:setFillColor( 0.5 )
+circle.strokeWidth = 5
+circle:setStrokeColor( 1, 0, 0 )
+circle.myName = "ball"
+circle.linearDamping = 1000 
+physics.addBody( circle, "dynamic" ) -- SANI: Make a position moveable
+
+-- SANI: Function to detect collision
+local function ballPlateCollision(event)
+    
+    
+    if ( event.phase == "began" ) then
+        score = score + 1
+        scoreText.text = "Collisions: " .. score
+        audio.play( backgroundMusic ) 
+        display.remove(circle)
+
+        playSound = true
+          remove = timer.performWithDelay(1000, function()
+
+              if playSound == true then
+                  audio.play( clear )
+                  playSound = false
+               end
+             end )
+        -- display.remove(circle) -- SANI: Remove object on collision
+    end
+    
+                
+end
+-- SANI: Collision event
+circle:addEventListener( "collision", ballPlateCollision )
+
+
+
+ 
