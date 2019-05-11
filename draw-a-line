@@ -1,0 +1,7 @@
+local physics = require("physics")
+physics.start()
+
+-- SANI: DRAW A LINE
+local line = display.newLine( 0, 0, 500, 500 )
+
+-- SANI: newLine(x1, y1, x2, y2)
