@@ -1,0 +1,24 @@
+main.lua
+==========================
+-----------------------------------------------------------------------------------------
+--
+-- main.lua
+--
+-----------------------------------------------------------------------------------------
+
+-- Your code here
+-- SANI
+local composer = require( "composer" )
+
+display.setStatusBar( display.HiddenStatusBar )
+
+composer.gotoScene("main_menu")
+
+=====================================================================================
+main_menu.lua
+====================================
+local composer = require( "composer" )
+local scene = composer.newScene()
+local widget = require( "widget" )
+
+return scene
