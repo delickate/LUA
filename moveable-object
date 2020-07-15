@@ -1,0 +1,51 @@
+local composer = require( "composer" )
+-- SANI: variable to create scene 
+local start_scene = composer.newScene()
+
+-- SANI: make object moveable
+local function moveJet(event)
+    
+    local platformTouched = event.target
+       
+    if (event.phase == "began") then
+        display.getCurrentStage():setFocus( platformTouched )
+     
+         -- here the first position is stored in x and y         
+        platformTouched.startMoveX = platformTouched.x
+        platformTouched.startMoveY = platformTouched.y
+     
+    elseif (event.phase == "moved") then
+                    
+        -- here the distance is calculated between the start of the movement and its current position of the drag    
+        platformTouched.x = (event.x - event.xStart) + platformTouched.startMoveX
+        platformTouched.y = (event.y - event.yStart) + platformTouched.startMoveY
+    elseif event.phase == "ended" or event.phase == "cancelled"  then
+                 
+        -- here the focus is removed from the last position
+        display.getCurrentStage():setFocus( nil )
+    end
+
+    return true
+end
+
+
+ -- ############  SANI: PROGRAMMING STARTS HERE  ###########
+    -- SANI: Load box2d engine
+    local physics = require( "physics" )
+    physics.start()
+    
+    
+    -- SANI: Show jet
+    local laser_jet = display.newImageRect(sceneGroup, "jet0.png", 40, 40 )
+    laser_jet.x     = display.contentCenterX
+    laser_jet.y     = display.contentHeight-20
+    laser_jet.Name  = "laserjet"
+
+
+    -- touch event of jet
+    laser_jet:addEventListener("touch", moveJet)
+    -- collesion event of jet
+    -- laser_jet:addEventListener( "collision", onCollision ) 
+
+    physics.addBody( laser_jet, "static" )
+  
