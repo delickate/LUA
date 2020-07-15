@@ -1,0 +1,57 @@
+local composer = require( "composer" )
+-- SANI: variable to create scene 
+local start_scene = composer.newScene()
+
+
+-- SANI: Moving background
+local function moveBg( sceneGroup, bg1, bg2, bg3 )
+    local scrollSpeed = 2
+    -- move backgrounds to the left by scrollSpeed, default is 8
+    bg1.x = bg1.x - scrollSpeed
+    bg2.x = bg2.x - scrollSpeed
+    bg3.x = bg3.x - scrollSpeed
+ 
+    -- Set up listeners so when backgrounds hits a certain point off the screen,
+    -- move the background to the right off screen
+    if (bg1.x ) < -display.contentWidth then
+        bg1:translate( display.contentWidth*3, 0 )
+    end
+    if (bg2.x ) < -display.contentWidth then
+        bg2:translate( display.contentWidth*3, 0 )
+    end
+    if (bg3.x ) < -display.contentWidth then
+        bg3:translate( display.contentWidth*3, 0 )
+    end
+end
+
+
+-- ############  SANI: PROGRAMMING STARTS HERE  ###########
+    -- SANI: Load box2d engine
+    local physics = require( "physics" )
+    physics.start()
+
+    -- ########### background #################
+    
+
+-- Add First Background
+local bg1 = display.newImageRect("scrolling_background.jpg", display.contentWidth, display.contentHeight)
+bg1.x = 0
+bg1.y = display.contentHeight/2
+sceneGroup:insert(bg1);
+ 
+
+local bg2 = display.newImageRect("scrolling_background.jpg", display.contentWidth, display.contentHeight)
+bg2.x = display.contentWidth
+bg2.y = display.contentHeight/2
+sceneGroup:insert(bg2);
+
+-- Add Third Background
+local bg3 = display.newImageRect("scrolling_background.jpg", display.contentWidth, display.contentHeight)
+bg3.x = display.contentWidth*2
+bg3.y = display.contentHeight/2
+sceneGroup:insert(bg3);
+
+local movingBackground = function() return moveBg( sceneGroup, bg1, bg2, bg3 ) end
+      Runtime:addEventListener( "enterFrame", movingBackground )
+    -- ########### END background #############
+
